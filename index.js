@@ -4,10 +4,10 @@ import { appendFileSync } from 'fs';
 import moment from 'moment';
 import readlineSync from 'readline-sync';
 
-// Function to create a new Ethereum account with only the private key
+// Function to create a new Ethereum account with only the private key (without the 0x prefix)
 function createAccountETH() {
   const wallet = ethers.Wallet.createRandom();
-  const privateKey = wallet.privateKey;
+  const privateKey = wallet.privateKey.slice(2); // Remove the '0x' prefix
 
   return { privateKey };
 }
@@ -30,13 +30,13 @@ function createAccountETH() {
     // Create the specified number of wallets
     while (count > 0) {
       const createWalletResult = createAccountETH();
-      const theWallet = new Wallet(createWalletResult.privateKey);
+      const theWallet = new Wallet('0x' + createWalletResult.privateKey); // Re-add '0x' for wallet instantiation
 
       if (theWallet) {
-        // Append the private key to result.txt
+        // Append only the private key to result.txt (without the 0x prefix)
         appendFileSync(
           './result.txt',
-          `Private Key: ${createWalletResult.privateKey}\n`
+          `${createWalletResult.privateKey}\n`
         );
         // Display success message with the private key and timestamp
         console.log(
