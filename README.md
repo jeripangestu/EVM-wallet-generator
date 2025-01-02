@@ -16,7 +16,7 @@ git clone https://github.com/dante4rt/evm-wallet-generator.git
 
 After that, go to the folder: <br>
 ```
-cd evm-wallet-generator
+cd EVM-wallet-generator
 ```
 
 Then, you need to install it: <br>
