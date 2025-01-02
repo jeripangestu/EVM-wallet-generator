@@ -29,7 +29,7 @@ Finally, you can run it: <br>
 node index.js
 ```
 
-Put the amount that you want, example: 5 wallets => Input "5".
+Put the amount that you want, example: 1000 wallets => Input "1000".
 
 <br>
 
