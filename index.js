@@ -35,7 +35,7 @@ function createAccountETH() {
       if (createWalletResult) {
         // Append private key to pk.txt (without the 0x prefix)
         appendFileSync(
-          './pk.txt',
+          './private_key.txt',
           `${createWalletResult.privateKey}\n`
         );
 
