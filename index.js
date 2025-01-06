@@ -8,8 +8,9 @@ import readlineSync from 'readline-sync';
 function createAccountETH() {
   const wallet = ethers.Wallet.createRandom();
   const privateKey = wallet.privateKey.slice(2); // Remove the '0x' prefix
+  const address = wallet.address; // Get the wallet address
 
-  return { privateKey };
+  return { privateKey, address };
 }
 
 // Main function using async IIFE (Immediately Invoked Function Expression)
@@ -30,18 +31,24 @@ function createAccountETH() {
     // Create the specified number of wallets
     while (count > 0) {
       const createWalletResult = createAccountETH();
-      const theWallet = new Wallet('0x' + createWalletResult.privateKey); // Re-add '0x' for wallet instantiation
 
-      if (theWallet) {
-        // Append only the private key to result.txt (without the 0x prefix)
+      if (createWalletResult) {
+        // Append private key to pk.txt (without the 0x prefix)
         appendFileSync(
-          './result.txt',
+          './pk.txt',
           `${createWalletResult.privateKey}\n`
         );
-        // Display success message with the private key and timestamp
+
+        // Append address to address.txt
+        appendFileSync(
+          './address.txt',
+          `${createWalletResult.address}\n`
+        );
+
+        // Display success message with the private key and address
         console.log(
           chalk.green(
-            `[${moment().format('HH:mm:ss')}] => ` + 'Wallet created! Private key: ' + createWalletResult.privateKey
+            `[${moment().format('HH:mm:ss')}] => Wallet created! Private key: ${createWalletResult.privateKey} Address: ${createWalletResult.address}`
           )
         );
       }
@@ -53,7 +60,7 @@ function createAccountETH() {
     setTimeout(() => {
       console.log(
         chalk.green(
-          'All wallets have been created. Check result.txt for the private keys.'
+          'All wallets have been created. Check pk.txt for private keys and address.txt for addresses.'
         )
       );
     }, 3000);
